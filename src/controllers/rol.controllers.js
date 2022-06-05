@@ -3,14 +3,12 @@ const {response, request} = require('express');
 const Rol = require('../models/roles')
 
 
-const rolGet = (req = request,res=response)=>{
+const rolGet = async (req = request,res=response)=>{
 
-    const {page=1,limit=5} = req.query;
+    const rol = await Rol.find()
 
     res.json({
-        msg:'get API',
-        page,
-        limit
+        rol
     })
 }
 
@@ -18,8 +16,6 @@ const rolPost = async (req = request,res=response)=>{
 
     const {rol} = req.body; 
     const rolreg = new Rol({rol});
-
-    
 
     //encriptar la contraseña
     await rolreg.save();//guarda el registro si cumple con todos los campos
@@ -30,19 +26,27 @@ const rolPost = async (req = request,res=response)=>{
     })
 }
 
-const rolPut = (req = request,res=response)=>{
+const rolPut = async (req = request,res=response)=>{
 
     const id = req.params.id
+    const body = req.body;
+
+    const rol = await Rol.findByIdAndUpdate(id, body);
 
     res.json({
-        msg:'put API',
-        id
+        rol
     })
 }
 
-const rolDelete = (req = request,res=response)=>{
+const rolDelete = async (req = request,res=response)=>{
+    
+    const {id} = req.params
+
+    //borrar el registro fisicamente
+    const rol = await Rol.findByIdAndDelete(id);
+
     res.json({
-        msg:'delete API'
+        id,
     })
 }
 
