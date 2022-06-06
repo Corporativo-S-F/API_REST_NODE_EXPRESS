@@ -78,10 +78,7 @@ const usuariosDelete = async(req = request,res=response)=>{
     //cambiar el estado del registro
     const usuario = await Usuario.findByIdAndUpdate(id, {estado:false})
 
-    res.json({
-        id,
-        "msg":"operación existosa"
-    })
+    res.json({usuario})
 }
 
 

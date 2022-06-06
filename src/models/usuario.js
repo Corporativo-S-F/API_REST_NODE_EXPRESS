@@ -28,12 +28,17 @@ const UsuarioSchema = Schema({
     estado:{
         type:Boolean,
         default:true
+    },
+    status: {
+        type:String,
+        default:"active"
     }
 })
 
 //modifica el objeto para hacer el return de __V y password
 UsuarioSchema.methods.toJSON = function(){
-    const {__v, password, ...usuario} = this.toObject();
+    const {__v, password, _id, ...usuario} = this.toObject();
+    usuario.uid = _id
     return usuario
 }
 
