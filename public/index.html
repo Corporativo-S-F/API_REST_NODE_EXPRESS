@@ -12,7 +12,7 @@
 
     
       <div id="g_id_onload"
-         data-client_id="344754809232-2t60f1o2tn0p46trth4l8i5h7dorgrq8.apps.googleusercontent.com"
+         data-client_id="google-client-id"
          data-callback="handleCredentialResponse"
          data-auto_prompt="false">
       </div>
@@ -36,7 +36,6 @@
         function handleCredentialResponse(response) {
            
             //google token:ID token
-           //console.log(response.credential);
             const body = {id_token:response.credential}
             fetch('/api/auth/google',{
                 method:"POST",
@@ -48,7 +47,7 @@
             .then(resp=>resp.json())
             .then(resp=>{
                 localStorage.setItem('email',resp.usuario.correo)
-                console.log(resp)
+                
             })
             .catch(console.warn)
 
@@ -57,7 +56,6 @@
       <script>
           const button = document.getElementById('google_signout');
           button.onclick=()=>{
-              console.log(google.accounts.id)
               google.accounts.id.disableAutoSelect()
 
               google.accounts.id.revoke(localStorage.getItem('email'),done=>{
